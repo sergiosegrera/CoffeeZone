@@ -1,8 +1,10 @@
 package database;
 
+// Change name to database controller?
 public class Database {
 	// Constructor creates connection
 	
+	// Register create hash and salt maybe even create cart
 	// Login + Get customer info (cart)
 	// Get Products (Select * from products)
 	// Get Menus (Select * from menus)
