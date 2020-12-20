@@ -24,6 +24,14 @@ public class MenuProduct {
 		this.product = product;
 		this.setQuantity(quantity);
 	}
+	
+	public Product getProduct() {
+		return this.product;
+	}
+	
+	public void setProduct(Product product) {
+		this.product = product;
+	}
 
 	public int getSugars() {
 		return sugars;

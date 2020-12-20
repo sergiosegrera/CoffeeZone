@@ -15,6 +15,10 @@ public class Menu {
 		this.totalPrice = totalPrice;
 	}
 	
+	public Menu(String name) {
+		this.name = name;
+	}
+	
 	// TODO: Overloaded constructor that omits the totalPrice and calculates it on its own
 
 	public int getId() {

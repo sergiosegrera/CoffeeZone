@@ -34,8 +34,7 @@ CREATE TABLE carts (
     customer_id VARCHAR2(20),
     total_price NUMBER(6, 2),
     
-    CONSTRAINT cart_pk PRIMARY KEY (cart_id),
-    CONSTRAINT customer_fk FOREIGN KEY (customer_id) REFERENCES customers (customer_id)
+    CONSTRAINT cart_pk PRIMARY KEY (cart_id)
 );
 
 CREATE TABLE menus (

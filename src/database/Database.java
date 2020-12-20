@@ -6,6 +6,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -16,6 +17,7 @@ import models.CartMenu;
 import models.Customer;
 import models.Menu;
 import models.MenuProduct;
+import models.Order;
 import models.Product;
 import utils.Hasher;
 
@@ -348,6 +350,7 @@ public class Database {
 			
 			deleteStmt.execute();
 			con.commit();	
+			deleteStmt.close();
 			
 			PreparedStatement updateCartStmt = con.prepareStatement("UPDATE carts SET total_price = ? WHERE cart_id = ?");
 			updateCartStmt.setDouble(1, customer.getCart().getTotalPrice());
@@ -355,6 +358,7 @@ public class Database {
 			
 			updateCartStmt.execute();
 			con.commit();
+			updateCartStmt.close();
 		}
 		
 		for (CartMenu cartMenu : customer.getCart().getMenus()) {	
@@ -365,23 +369,95 @@ public class Database {
 			
 			insertStmt.execute();
 			con.commit();
+			insertStmt.close();
 		}
 		
+		stmt.close();
 	}
 	
-	public void saveMenu(Menu menu) {
+	private void saveMenuProducts(Menu menu) throws SQLException {
+		for (MenuProduct menuProduct : menu.getProducts()) {
+			PreparedStatement stmt = con.prepareCall("INSERT INTO menu_products VALUES (?, ?, ?, ?, ?, ?)");
+			stmt.setInt(1, menu.getId());
+			stmt.setInt(2, menuProduct.getProduct().getId());
+			stmt.setInt(3, menuProduct.getSugars());			
+			stmt.setInt(4, menuProduct.getMilks());
+			stmt.setInt(5, menuProduct.getCreams());
+			stmt.setInt(6, menuProduct.getQuantity());
+			
+			stmt.execute();
+			this.con.commit();
+			
+			stmt.close();
+		}
+	}
+	
+	public void saveMenu(Menu menu) throws SQLException {
 		if (menu.getId() == 0) {
 			// new menu
 			// insert menu + menu_products
+			PreparedStatement insertMenuStmt = con.prepareStatement("INSERT INTO menus VALUES(DEFAULT, ?, ?", Statement.RETURN_GENERATED_KEYS);
+			
+			insertMenuStmt.setString(1, menu.getName());
+			insertMenuStmt.setDouble(2, menu.getTotalPrice());
+			
+			insertMenuStmt.executeUpdate();
+			con.commit();
+			
+			// Get generated menu_id
+			ResultSet result = insertMenuStmt.getGeneratedKeys();
+			if (result.next()) {
+				menu.setId(result.getInt(1));
+			}
+			
+			insertMenuStmt.close();
+			
+			saveMenuProducts(menu);
+			
 		} else {
 			// old menu			
 			// update total_price
-			// delete menu_products and add them
+			PreparedStatement updateMenuStmt = con.prepareStatement("UPDATE menus SET name = ?, total_price = ? WHERE menu_id = ?");
+			
+			updateMenuStmt.setString(1, menu.getName());
+			updateMenuStmt.setDouble(2, menu.getTotalPrice());
+			updateMenuStmt.setInt(3, menu.getId());
+			
+			updateMenuStmt.execute();
+			con.commit();
+			updateMenuStmt.close();
+			
+			// delete menu_products and add them		
+			PreparedStatement deleteMenuProductsStmt = con.prepareStatement("DELETE menu_products WHERE menu_id = ?");
+			
+			deleteMenuProductsStmt.setInt(1, menu.getId());
+			
+			deleteMenuProductsStmt.execute();
+			con.commit();
+			deleteMenuProductsStmt.close();
+			
+			saveMenuProducts(menu);
 		}
 	}
 	
-	public void createOrder() {
-		// CHANGE customer_id of cart to 0
+	public void createOrder(Order order) throws SQLException {
+		PreparedStatement insertStmt = con.prepareStatement("INSERT INTO orders VALUES(DEFAULT, ?, ?, ?, ?, ?, sysdate, null, null)");
+		insertStmt.setString(1, order.getCustomer().getUsername());
+		insertStmt.setInt(2, order.getCart().getId());
+		insertStmt.setString(3, order.getCard());
+		insertStmt.setString(4, order.getCvc());
+		insertStmt.setString(5, order.getAddress());
+		
+		insertStmt.execute();
+		con.commit();
+		insertStmt.close();
+		
+		PreparedStatement updateCartCustomerIdStmt = con.prepareStatement("UPDATE carts SET customer_id = 0 WHERE cart_id = ?");
+		updateCartCustomerIdStmt.setInt(1, order.getCart().getId());
+		
+		updateCartCustomerIdStmt.execute();
+		con.commit();
+		updateCartCustomerIdStmt.close();
 	}
 		
 	public void rollback() throws SQLException {
