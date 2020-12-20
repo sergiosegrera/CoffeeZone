@@ -1,29 +1,35 @@
 package models;
 
+import java.util.ArrayList;
+
 public class Cart {
-	private String id;
-	private CartMenu[] menus;
+	private int id;
+	private ArrayList<CartMenu> menus;
 	private double totalPrice;
 	
-	Cart(String id, CartMenu[] menus, double totalPrice) {
+	public Cart() {
+		this.setTotalPrice(0);
+	}
+	
+	public Cart(int id, ArrayList<CartMenu> menus, double totalPrice) {
 		this.setId(id);
 		this.setMenus(menus);
 		this.setTotalPrice(totalPrice);
 	}
 
-	public String getId() {
+	public int getId() {
 		return id;
 	}
 
-	public void setId(String id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 
-	public CartMenu[] getMenus() {
+	public ArrayList<CartMenu> getMenus() {
 		return menus;
 	}
 
-	public void setMenus(CartMenu[] menus) {
+	public void setMenus(ArrayList<CartMenu> menus) {
 		this.menus = menus;
 	}
 	

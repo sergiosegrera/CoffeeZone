@@ -4,7 +4,7 @@ public class CartMenu {
 	private Menu menu;
 	private int quantity;
 	
-	CartMenu(Menu menu, int quantity) {
+	public CartMenu(Menu menu, int quantity) {
 		this.menu = menu;
 		this.setQuantity(quantity);
 	}

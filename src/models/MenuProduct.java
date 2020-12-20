@@ -8,7 +8,7 @@ public class MenuProduct {
 	private int quantity;
 	
 	// For coffee products
-	MenuProduct(Product product, int sugars, int milks, int creams, int quantity) {
+	public MenuProduct(Product product, int sugars, int milks, int creams, int quantity) {
 		this.product = product;
 		this.setQuantity(quantity);
 		

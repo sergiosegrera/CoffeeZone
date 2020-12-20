@@ -1,28 +1,19 @@
 package models;
 
 public class Customer {
-	private String id;
 	private String username;
 	private String phone;
 	private String email;
 	private String address;
+	private String refferedBy;
 	private Cart cart;
 	
-	Customer(String id, String username, String phone, String email, String address, Cart cart) {
-		this.id = id;
+	public Customer(String username, String phone, String email, String address, String refferedBy, Cart cart) {
 		this.username = username;
 		this.phone = phone;
 		this.email = email;
 		this.address = address;
 		this.cart = cart;
-	}
-
-	public String getId() {
-		return id;
-	}
-
-	public void setId(String id) {
-		this.id = id;
 	}
 
 	public String getUsername() {
@@ -63,5 +54,13 @@ public class Customer {
 
 	public void setCart(Cart cart) {
 		this.cart = cart;
+	}
+
+	public String getRefferedBy() {
+		return refferedBy;
+	}
+
+	public void setRefferedBy(String refferedBy) {
+		this.refferedBy = refferedBy;
 	}
 }

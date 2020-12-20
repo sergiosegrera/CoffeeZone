@@ -1,12 +1,14 @@
 package models;
 
+import java.util.ArrayList;
+
 public class Menu {
-	private String id;
+	private int id;
 	private String name;
-	private MenuProduct[] products;
+	private ArrayList<MenuProduct> products;
 	private double totalPrice;
 	
-	Menu(String id, String name, MenuProduct[] products, double totalPrice) {
+	public Menu(int id, String name, ArrayList<MenuProduct> products, double totalPrice) {
 		this.id = id;
 		this.name = name;
 		this.products = products;
@@ -15,11 +17,11 @@ public class Menu {
 	
 	// TODO: Overloaded constructor that omits the totalPrice and calculates it on its own
 
-	public String getId() {
+	public int getId() {
 		return id;
 	}
 
-	public void setId(String id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 
@@ -31,11 +33,11 @@ public class Menu {
 		this.name = name;
 	}
 
-	public MenuProduct[] getProducts() {
+	public ArrayList<MenuProduct> getProducts() {
 		return products;
 	}
 
-	public void setProducts(MenuProduct[] products) {
+	public void setProducts(ArrayList<MenuProduct> products) {
 		this.products = products;
 	}
 	

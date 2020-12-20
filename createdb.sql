@@ -9,8 +9,8 @@ DROP TABLE products;
 CREATE TABLE customers (
     customer_id VARCHAR2(20) NOT NULL,
     password RAW(38) NOT NULL,
-    salt VARCHAR2(20) NOT NULL,
-    address VARCHAR(2),
+    salt VARCHAR2(32) NOT NULL,
+    address VARCHAR(20),
     phone VARCHAR2(20) NOT NULL,
     email VARCHAR2(20) NOT NULL,
     last_connection TIMESTAMP,
@@ -31,7 +31,7 @@ CREATE TABLE products (
 
 CREATE TABLE carts (
     cart_id NUMBER GENERATED ALWAYS AS IDENTITY,
-    customer_id VARCHAR2(20) NOT NULL,
+    customer_id VARCHAR2(20),
     total_price NUMBER(6, 2),
     
     CONSTRAINT cart_pk PRIMARY KEY (cart_id),

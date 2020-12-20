@@ -1,13 +1,13 @@
 package models;
 
 public class Product {
-	private String id;
+	private int id;
 	private String name;
 	private boolean isDrink;
 	private int stock;
 	private double price;
 	
-	Product(String id, String name, boolean isDrink, int stock, double price) {
+	public Product(int id, String name, boolean isDrink, int stock, double price) {
 		this.setId(id);
 		this.setName(name);
 		this.setDrink(isDrink);
@@ -15,11 +15,11 @@ public class Product {
 		this.setPrice(price);
 	}
 
-	public String getId() {
+	public int getId() {
 		return id;
 	}
 
-	public void setId(String id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 	
