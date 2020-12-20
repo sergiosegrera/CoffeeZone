@@ -257,14 +257,55 @@ public class Database {
 		return false;
 	}
 	
-	public Product[] getProducts() {
+	public ArrayList<Product> getProducts() throws SQLException {
+		ArrayList<Product> products = new ArrayList<Product>();
 		
-		return null;
+		String string = "SELECT * FROM products";
+		PreparedStatement stmt = con.prepareCall(string);	
+		
+		ResultSet result = stmt.executeQuery();
+		con.commit();
+		
+		while (result.next()) {
+			boolean isDrink = false;
+			if (result.getInt("is_drink") > 0) {
+				isDrink = true;
+			}
+			
+			products.add(new Product(
+					result.getInt("product_id"),
+					result.getString("name"),
+					isDrink,
+					result.getInt("stock"),
+					result.getDouble("price")
+					));
+		}
+		
+		stmt.close();	
+		return products;
 	}
 	
-	public Menu[] getMenus() {
+	public ArrayList<Menu> getMenus() throws SQLException {
+		ArrayList<Menu> menus = new ArrayList<Menu>();
+				
+		String string = "SELECT * FROM menus";
+		PreparedStatement stmt = con.prepareCall(string);	
 		
-		return null;
+		ResultSet result = stmt.executeQuery();
+		con.commit();
+		
+		while (result.next()) {
+			int id = result.getInt("menu_id");
+			menus.add(new Menu(
+					id,
+					result.getString("name"),
+					getMenuProducts(id),
+					result.getDouble("total_price")
+					));
+		}
+		
+		stmt.close();
+		return menus;
 	}
 	
 	public void saveCart(Cart cart) {

@@ -1,6 +1,9 @@
 package database;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
+
+import models.Product;
 
 public class DatabaseTestMain {
 
@@ -11,11 +14,17 @@ public class DatabaseTestMain {
 				System.getenv("PASSWORD")
 				);
 		
-		db.newCustomer("sergio", "hello123", "sergio@gmail.com", "+5149999999", "1606 Ottawa st", "");
+		// db.newCustomer("sergio", "hello123", "sergio@gmail.com", "+5149999999", "1606 Ottawa st", "");
 		
-		System.out.println(db.login("sergio", "hello123"));
+		// System.out.println(db.login("sergio", "hello123"));
 		
-		System.out.println(db.getCustomer("sergio"));
+		// System.out.println(db.getCustomer("sergio"));
+		
+		ArrayList<Product> products = db.getProducts();
+		
+		for (Product product : products) {
+			System.out.println(product.getName());
+		}
 		
 		db.close();
 	}
