@@ -3,6 +3,7 @@ package database;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import models.Customer;
 import models.Product;
 
 public class DatabaseTestMain {
@@ -18,7 +19,12 @@ public class DatabaseTestMain {
 		
 		// System.out.println(db.login("sergio", "hello123"));
 		
-		// System.out.println(db.getCustomer("sergio"));
+		Customer customer = db.getCustomer("sergio");
+		System.out.println(customer.getUsername());
+		System.out.println(customer.getCart().getId());
+		System.out.println(customer.getCart().getTotalPrice());
+		customer.getCart().setTotalPrice(20.5);
+		db.saveCart(customer);
 		
 		ArrayList<Product> products = db.getProducts();
 		

@@ -51,6 +51,8 @@ public class Database {
 		String salt = this.hasher.getSalt();
 		byte[] hashAndSaltedPassword = this.hasher.hash(password, salt);
 		
+		int cartId = 0;
+		
 		try {
 			String string = "INSERT INTO customers VALUES(?, ?, ?, ?, ?, ?, ?, ?)";
 			stmt = con.prepareStatement(string);
@@ -66,6 +68,24 @@ public class Database {
 			
 			stmt.execute();
 			con.commit();
+			
+			PreparedStatement insertCartStmt = con.prepareCall("INSERT INTO carts VALUES (DEFAULT, ?, ?)");
+			insertCartStmt.setString(1, name);
+			insertCartStmt.setInt(2, 0);
+			
+			insertCartStmt.execute();
+			con.commit();
+			
+			PreparedStatement cartIdStmt = con.prepareCall("SELECT cart_id FROM carts WHERE customer_id = ?");
+			cartIdStmt.setString(1, name);
+			
+			ResultSet result = cartIdStmt.executeQuery();
+			con.commit();
+			
+			while (result.next()) {
+				cartId = result.getInt("cart_id");
+			}
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 			con.rollback();
@@ -73,7 +93,7 @@ public class Database {
 			stmt.close();
 		}
 		
-		return new Customer(name, phone, email, address, refferedBy, new Cart());
+		return new Customer(name, phone, email, address, refferedBy, new Cart(cartId));
 	}
 	
 	private Product getProduct(int id) throws SQLException {
@@ -308,20 +328,62 @@ public class Database {
 		return menus;
 	}
 	
-	public void saveCart(Cart cart) {
+	public void saveCart(Customer customer) throws SQLException {
+		// Check if cart with the same cart_id && customer_id exists
+		// If yes delete cart_menus with cart_id
+		// and insert new cart
+		String string = "SELECT * FROM carts WHERE cart_id = ? AND customer_id = ?";
+		PreparedStatement stmt = con.prepareCall(string);
+		
+		
+		stmt.setInt(1, customer.getCart().getId());		
+		stmt.setString(2, customer.getUsername());
+		
+		ResultSet result = stmt.executeQuery();
+		con.commit();
+		
+		while (result.next()) {
+			PreparedStatement deleteStmt = con.prepareCall("DELETE FROM cart_menus WHERE menu_id = ?");
+			deleteStmt.setInt(1, customer.getCart().getId());
+			
+			deleteStmt.execute();
+			con.commit();	
+			
+			PreparedStatement updateCartStmt = con.prepareStatement("UPDATE carts SET total_price = ? WHERE cart_id = ?");
+			updateCartStmt.setDouble(1, customer.getCart().getTotalPrice());
+			updateCartStmt.setInt(2, customer.getCart().getId());
+			
+			updateCartStmt.execute();
+			con.commit();
+		}
+		
+		for (CartMenu cartMenu : customer.getCart().getMenus()) {	
+			PreparedStatement insertStmt = con.prepareCall("INSERT INTO cart_menus VALUES (?, ?, ?");
+			stmt.setInt(1, customer.getCart().getId());
+			stmt.setInt(2, cartMenu.getMenu().getId());
+			stmt.setInt(3, cartMenu.getQuantity());
+			
+			insertStmt.execute();
+			con.commit();
+		}
 		
 	}
 	
 	public void saveMenu(Menu menu) {
-		
+		if (menu.getId() == 0) {
+			// new menu
+			// insert menu + menu_products
+		} else {
+			// old menu			
+			// update total_price
+			// delete menu_products and add them
+		}
 	}
 	
-	//public void createOrder()
-	
-	// Save Order (Insert)
-	
-	// close() to close connection
-	
+	public void createOrder() {
+		// CHANGE customer_id of cart to 0
+	}
+		
 	public void rollback() throws SQLException {
 		this.con.rollback();
 	}

@@ -7,7 +7,8 @@ public class Cart {
 	private ArrayList<CartMenu> menus;
 	private double totalPrice;
 	
-	public Cart() {
+	public Cart(int id) {
+		this.id = id;
 		this.setTotalPrice(0);
 	}
 	

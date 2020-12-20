@@ -48,14 +48,16 @@ CREATE TABLE menus (
 
 CREATE TABLE orders (
     order_id NUMBER GENERATED ALWAYS AS IDENTITY,
+    customer_id VARCHAR2(20),
     cart_id NUMBER,
-    card VARCHAR(20),
-    cvc VARCHAR(20),
-    address VARCHAR(20),
+    card VARCHAR2(20),
+    cvc VARCHAR2(20),
+    address VARCHAR2(20),
     placed DATE,
     sent DATE,
     delivered DATE,
     
+    CONSTRAINT o_customer_fk FOREIGN KEY (customer_id) REFERENCES customers (customer_id),
     CONSTRAINT cart_fk FOREIGN KEY (cart_id) REFERENCES carts (cart_id)
 );
 
@@ -79,3 +81,7 @@ CREATE TABLE menu_products (
     CONSTRAINT menu_id FOREIGN KEY (menu_id) REFERENCES menus (menu_id),
     CONSTRAINT product_id FOREIGN KEY (product_id) REFERENCES products (product_id)
 );
+
+INSERT INTO products VALUES (DEFAULT, 'Filtered Coffee', 1, 32, 1.50);
+
+SELECT product_id, name, is_drink, stock, price FROM products;
