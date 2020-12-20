@@ -6,10 +6,11 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Text?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.MenuController">
+<fx:root maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" type="Pane" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
+      <TextField fx:id="sugarsField" layoutX="226.0" layoutY="200.0" promptText="Sugars" />
       <TextField fx:id="menuNameField" layoutX="410.0" layoutY="37.0" promptText="Name your menu" />
-      <Button fx:id="addToMenuButton" layoutX="257.0" layoutY="247.0" mnemonicParsing="false" text="Add to Menu" />
+      <Button fx:id="addToMenuButton" layoutX="257.0" layoutY="247.0" mnemonicParsing="false" onAction="#addToMenu" text="Add to Menu" />
       <TextField fx:id="quantityField" layoutX="226.0" layoutY="93.0" promptText="Quantity" text="1" />
       <Button fx:id="addMenuToCartButton" layoutX="375.0" layoutY="343.0" mnemonicParsing="false" text="Add Menu to Cart" />
       <Text layoutX="29.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Products" />
@@ -19,6 +20,5 @@
       <Button fx:id="viewCartButton" layoutX="507.0" layoutY="343.0" mnemonicParsing="false" text="View Cart" />
       <TextField fx:id="milkField" layoutX="226.0" layoutY="131.0" promptText="Milks" />
       <TextField fx:id="creamsField" layoutX="226.0" layoutY="165.0" promptText="Creams" />
-      <TextField layoutX="226.0" layoutY="200.0" promptText="Sugars" />
    </children>
-</Pane>
+</fx:root>

@@ -22,7 +22,11 @@ public class Client extends Application {
 				);
 		Group root = new Group();
 		
-		Scene scene = new Scene(root, 400, 400);
+		Menu menu = new Menu(db, null);
+		
+		root.getChildren().add(menu);
+		
+		Scene scene = new Scene(root, 600, 400);
 		stage.setScene(scene);
 		stage.show();
 	}
