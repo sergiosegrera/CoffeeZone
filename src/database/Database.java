@@ -36,6 +36,7 @@ public class Database {
 	
 	public Customer newCustomer(String name, String password, String email, String phone, String address) {
 		// Create customer + create cart
+		// salt and hash
 		return null;
 	}
 	
