@@ -35,7 +35,12 @@ public class Cart {
 	}
 	
 	public void calculateTotalPrice() {
-		// TODO: calculate all the menu prices
+		double total = 0;
+		for (CartMenu cartMenu : menus) {
+			total += cartMenu.getMenu().getTotalPrice() * cartMenu.getQuantity();
+		}
+		
+		this.totalPrice = total;
 	}
 
 	public double getTotalPrice() {

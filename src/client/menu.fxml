@@ -17,7 +17,7 @@
       <ListView fx:id="productList" layoutX="29.0" layoutY="37.0" prefHeight="340.0" prefWidth="182.0" />
       <ListView fx:id="menuProductList" layoutX="389.0" layoutY="75.0" prefHeight="230.0" prefWidth="190.0" />
       <Text fx:id="menuTotal" layoutX="433.0" layoutY="329.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Total Menu Price: 0" />
-      <Button fx:id="viewCartButton" layoutX="507.0" layoutY="343.0" mnemonicParsing="false" text="View Cart" />
+      <Button fx:id="viewCartButton" layoutX="507.0" layoutY="343.0" mnemonicParsing="false" onAction="#viewCartAction" text="View Cart" />
       <TextField fx:id="milkField" layoutX="226.0" layoutY="131.0" promptText="Milks" />
       <TextField fx:id="creamsField" layoutX="226.0" layoutY="165.0" promptText="Creams" />
    </children>

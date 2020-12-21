@@ -42,7 +42,8 @@ CREATE TABLE menus (
     name VARCHAR2(20),
     total_price NUMBER(6, 2),
     
-    CONSTRAINT menu_pk PRIMARY KEY (menu_id)
+    CONSTRAINT menu_pk PRIMARY KEY (menu_id),
+    CONSTRAINT unique_name UNIQUE (name)
 );
 
 CREATE TABLE orders (

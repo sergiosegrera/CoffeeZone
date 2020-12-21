@@ -40,9 +40,21 @@ public class Client extends Application {
 	public void viewMenu(Customer customer) {
 		Group root = new Group();
 		
-		Menu menu = new Menu(db, customer);
+		Menu menu = new Menu(this, db, customer);
 		
 		root.getChildren().add(menu);
+		
+		Scene scene = new Scene(root, 600, 400);
+		stage.setScene(scene);
+		stage.show();
+	}
+	
+	public void viewCheckout(Customer customer) {
+		Group root = new Group();
+		
+		Checkout checkoutPane = new Checkout(this, db, customer);
+		
+		root.getChildren().add(checkoutPane);
 		
 		Scene scene = new Scene(root, 600, 400);
 		stage.setScene(scene);

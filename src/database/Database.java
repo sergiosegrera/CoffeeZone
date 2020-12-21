@@ -362,7 +362,7 @@ public class Database {
 		}
 		
 		for (CartMenu cartMenu : customer.getCart().getMenus()) {	
-			PreparedStatement insertStmt = con.prepareCall("INSERT INTO cart_menus VALUES (?, ?, ?");
+			PreparedStatement insertStmt = con.prepareCall("INSERT INTO cart_menus VALUES (?, ?, ?)");
 			stmt.setInt(1, customer.getCart().getId());
 			stmt.setInt(2, cartMenu.getMenu().getId());
 			stmt.setInt(3, cartMenu.getQuantity());
@@ -396,27 +396,26 @@ public class Database {
 		if (menu.getId() == 0) {
 			// new menu
 			// insert menu + menu_products
-			PreparedStatement insertMenuStmt = con.prepareStatement("INSERT INTO menus VALUES(DEFAULT, ?, ?)", Statement.RETURN_GENERATED_KEYS);
+			PreparedStatement insertMenuStmt = con.prepareStatement("INSERT INTO menus VALUES(DEFAULT, ?, ?)");
+			
 			
 			insertMenuStmt.setString(1, menu.getName());
 			insertMenuStmt.setDouble(2, menu.getTotalPrice());
 			
 			insertMenuStmt.executeUpdate();
-			con.commit();
-			
-			// Get generated menu_id
-			ResultSet result = insertMenuStmt.getGeneratedKeys();
-			if (result.next()) {
-				System.out.println(result.toString());
-				System.out.println("hello");
-				String id = result.getString(1);				
-				System.out.println(id);
-				//menu.setId(Integer.valueOf(id.intValue()));
-			}
-			result.close();
-			
+			con.commit();	
 			insertMenuStmt.close();
 			
+			PreparedStatement menuIdStmt = con.prepareStatement("SELECT menu_id FROM menus WHERE name = ?");	
+			menuIdStmt.setString(1, menu.getName());
+			
+			ResultSet result = menuIdStmt.executeQuery();
+			con.commit();
+			
+			while (result.next()) {
+				menu.setId(result.getInt("menu_id"));
+			}	
+				
 			saveMenuProducts(menu);
 			
 		} else {
@@ -446,7 +445,7 @@ public class Database {
 	}
 	
 	public void createOrder(Order order) throws SQLException {
-		PreparedStatement insertStmt = con.prepareStatement("INSERT INTO orders VALUES(DEFAULT, ?, ?, ?, ?, ?, sysdate, null, null)");
+		PreparedStatement insertStmt = con.prepareStatement("INSERT INTO orders VALUES (DEFAULT, ?, ?, ?, ?, ?, sysdate, null, null)");
 		insertStmt.setString(1, order.getCustomer().getUsername());
 		insertStmt.setInt(2, order.getCart().getId());
 		insertStmt.setString(3, order.getCard());

@@ -18,6 +18,7 @@ import models.MenuProduct;
 import models.Product;
 
 public class Menu extends Pane {
+	private Client client;
 	private Database db;
 	private Customer customer;
 	private models.Menu menu;
@@ -42,10 +43,11 @@ public class Menu extends Pane {
 	@FXML
 	private TextField menuNameField;
     
-    public Menu(Database db, Customer customer) {
+    public Menu(Client client, Database db, Customer customer) {
+    	this.client = client;
     	this.db = db;
     	this.customer = customer;
-    	this.menu = new models.Menu(null);
+    	this.menu = new models.Menu("");
     	try {
     		FXMLLoader loader = new FXMLLoader(getClass().getResource("menu.fxml"));
     		loader.setController(this);
@@ -105,6 +107,7 @@ public class Menu extends Pane {
     	if (menuTitle.equals("")) {
     		menuTitle = customer.getUsername() + "'s Menu";
     	}
+    	menu.setName(menuTitle);
     	if (menu.getProducts().size() > 0) {
     		ArrayList<CartMenu> menus = customer.getCart().getMenus();
     		menus.add(new CartMenu(this.menu, 1));
@@ -128,6 +131,10 @@ public class Menu extends Pane {
 			menuNameField.setText("");
     	}
     }
-
+    
+    @FXML
+    private void viewCartAction(ActionEvent event) {
+    	this.client.viewCheckout(customer);
+    }
     
 }

@@ -1,28 +1,20 @@
 package models;
 
 public class Order {
-	private int id;
 	private Customer customer;
 	private Cart cart;
 	private String card;
 	private String cvc;
 	private String address;
 	
-	public Order(int id, Customer customer, Cart cart, String card, String cvc, String address) {
-		this.id = id;
+	public Order(Customer customer, Cart cart, String card, String cvc, String address) {
 		this.customer = customer;
 		this.cart = cart;
 		this.card = card;
 		this.cvc = cvc;
 		this.address = address;
 	}
-	
-	public int getId() {
-		return id;
-	}
-	public void setId(int id) {
-		this.id = id;
-	}
+
 	public Customer getCustomer() {
 		return customer;
 	}

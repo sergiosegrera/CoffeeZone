@@ -20,5 +20,9 @@ public class CartMenu {
 	public void setQuantity(int quantity) {
 		this.quantity = quantity;
 	}
+	
+	public String toString() {
+		return this.quantity + "x " + this.menu.getName() + " " + this.menu.getTotalPrice() * this.quantity;
+	}
 
 }
