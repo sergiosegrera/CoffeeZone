@@ -81,6 +81,45 @@ CREATE TABLE menu_products (
     CONSTRAINT product_id FOREIGN KEY (product_id) REFERENCES products (product_id)
 );
 
+
+CREATE OR REPLACE TRIGGER  before_orders_insert
+BEFORE INSERT
+ON orders
+FOR EACH ROW
+BEGIN
+    SELECT stock INTO prod_stock FROM products
+    WHERE product_id = (
+    SELECT product_id FROM products
+    INNER JOIN menu_products USING(product_id)
+    INNER JOIN menus USING(menu_id)
+    INNER JOIN cart_menus USING(menu_id)
+    INNER JOIN carts USING(cart_id)
+    INNER JOIN orders USING(cart_id)
+    WHERE cart_id = :NEW.cart_id);
+    
+    IF(prod_stock = 0) THEN 
+        raise_application_error(-20100, 'Product out of stock. This order cannot be placed');
+    END IF;
+END;
+
 INSERT INTO products VALUES (DEFAULT, 'Filtered Coffee', 1, 32, 1.50);
+INSERT INTO products VALUES (DEFAULT, 'Americano', 1, 30, 1.50);
+INSERT INTO products VALUES (DEFAULT, 'Espresso', 1, 32, 2.00);
+INSERT INTO products VALUES (DEFAULT, 'Cappuccino', 1, 20, 3.00);
+INSERT INTO products VALUES (DEFAULT, 'Frappuccino', 1, 20, 3.50);
+INSERT INTO products VALUES (DEFAULT, 'Iced Coffee', 1, 35, 2.50);
+INSERT INTO products VALUES (DEFAULT, 'French Vanilla', 1, 25, 3.00);
+INSERT INTO products VALUES (DEFAULT, 'Iced Tea', 1, 20, 2.50);
+
+INSERT INTO products VALUES (DEFAULT, 'Bagel', 0, 15, 2.25);
+INSERT INTO products VALUES (DEFAULT, 'Banana Bread', 0, 12, 1.50);
+INSERT INTO products VALUES (DEFAULT, 'Brownie', 0, 20, 2.50);
+INSERT INTO products VALUES (DEFAULT, 'Croissant', 0, 30, 2.00);
+INSERT INTO products VALUES (DEFAULT, 'Muffin', 0, 25, 2.25);
+INSERT INTO products VALUES (DEFAULT, 'Grilled Cheese Sandwich', 0, 15, 3.00);
+
+
+
+
 
 SELECT product_id, name, is_drink, stock, price FROM products;
