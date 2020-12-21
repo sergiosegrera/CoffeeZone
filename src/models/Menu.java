@@ -17,6 +17,7 @@ public class Menu {
 	
 	public Menu(String name) {
 		this.name = name;
+		this.products = new ArrayList<MenuProduct>();
 	}
 	
 	// TODO: Overloaded constructor that omits the totalPrice and calculates it on its own
@@ -46,8 +47,14 @@ public class Menu {
 	}
 	
 	public void calculateTotalPrice() {
-		// TODO: Calculate and add all of the prices of all the products + milks, creams, sugars
-		// maybe change to return double? or just set totalPrice
+		double total = 0;
+		
+		for (MenuProduct menuProduct : products) {
+			total += menuProduct.getQuantity() * menuProduct.getProduct().getPrice();
+			// TODO: Add cream and stuff price
+		}
+		
+		this.totalPrice = total;
 	}
 
 	public double getTotalPrice() {
@@ -56,5 +63,5 @@ public class Menu {
 
 	public void setTotalPrice(double totalPrice) {
 		this.totalPrice = totalPrice;
-	}
+	}	
 }

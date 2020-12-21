@@ -12,7 +12,7 @@
       <TextField fx:id="menuNameField" layoutX="410.0" layoutY="37.0" promptText="Name your menu" />
       <Button fx:id="addToMenuButton" layoutX="257.0" layoutY="247.0" mnemonicParsing="false" onAction="#addToMenu" text="Add to Menu" />
       <TextField fx:id="quantityField" layoutX="226.0" layoutY="93.0" promptText="Quantity" text="1" />
-      <Button fx:id="addMenuToCartButton" layoutX="375.0" layoutY="343.0" mnemonicParsing="false" text="Add Menu to Cart" />
+      <Button fx:id="addMenuToCartButton" layoutX="375.0" layoutY="343.0" mnemonicParsing="false" onAction="#addMenuToCart" text="Add Menu to Cart" />
       <Text layoutX="29.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Products" />
       <ListView fx:id="productList" layoutX="29.0" layoutY="37.0" prefHeight="340.0" prefWidth="182.0" />
       <ListView fx:id="menuProductList" layoutX="389.0" layoutY="75.0" prefHeight="230.0" prefWidth="190.0" />

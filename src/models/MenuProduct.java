@@ -20,7 +20,7 @@ public class MenuProduct {
 	}
 	
 	// For menu products
-	MenuProduct(String id, Product product, int quantity) {
+	public MenuProduct(Product product, int quantity) {
 		this.product = product;
 		this.setQuantity(quantity);
 	}
@@ -63,6 +63,11 @@ public class MenuProduct {
 
 	public void setQuantity(int quantity) {
 		this.quantity = quantity;
+	}
+	
+	
+	public String toString() {
+		return this.product.getName() + " " + this.product.getPrice() + " $";
 	}
 }
 

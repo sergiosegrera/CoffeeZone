@@ -82,5 +82,6 @@ CREATE TABLE menu_products (
 );
 
 INSERT INTO products VALUES (DEFAULT, 'Filtered Coffee', 1, 32, 1.50);
+INSERT INTO products VALUES (DEFAULT, 'Americano', 1, 40, 3);
 
 SELECT product_id, name, is_drink, stock, price FROM products;
