@@ -41,7 +41,29 @@ public class Menu extends Pane {
 	private Text menuTotal;
 	@FXML
 	private TextField menuNameField;
-	
+    
+    public Menu(Database db, Customer customer) {
+    	this.db = db;
+    	this.customer = customer;
+    	this.menu = new models.Menu(null);
+    	try {
+    		FXMLLoader loader = new FXMLLoader(getClass().getResource("menu.fxml"));
+    		loader.setController(this);
+    		loader.setRoot(this);
+    		loader.load();
+    	} catch (IOException e) {
+    		e.printStackTrace();
+    	}
+    	
+    	try {
+			products = db.getProducts();	
+			productList.getItems().addAll(products);
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+    }
+    
 	private int stringToInt(String string) {
 		int value;
 		try {
@@ -87,32 +109,25 @@ public class Menu extends Pane {
     		ArrayList<CartMenu> menus = customer.getCart().getMenus();
     		menus.add(new CartMenu(this.menu, 1));
     		customer.getCart().setMenus(menus);
+    		try {
+				db.saveMenu(menu);
+			} catch (SQLException e) {
+				
+				// ERROR CANT ADD to db;
+				try {
+					db.rollback();
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				e.printStackTrace();
+			}
     		
     		this.menu = new models.Menu("");    		
 			menuProductList.getItems().clear();
+			menuNameField.setText("");
     	}
     }
-    
-    public Menu(Database db, Customer customer) {
-    	this.db = db;
-    	this.customer = customer;
-    	this.menu = new models.Menu(null);
-    	try {
-    		FXMLLoader loader = new FXMLLoader(getClass().getResource("menu.fxml"));
-    		loader.setController(this);
-    		loader.setRoot(this);
-    		loader.load();
-    	} catch (IOException e) {
-    		e.printStackTrace();
-    	}
-    	
-    	try {
-			products = db.getProducts();	
-			productList.getItems().addAll(products);
-			
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-    }
+
     
 }

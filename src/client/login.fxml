@@ -1,22 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.Pane?>
 
-
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<fx:root maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" type="Pane" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <TextField layoutX="30.0" layoutY="29.0" promptText="username" />
-      <Button layoutX="133.0" layoutY="106.0" mnemonicParsing="false" text="Login" />
-      <PasswordField layoutX="30.0" layoutY="68.0" promptText="password" />
-      <Button layoutX="462.0" layoutY="273.0" mnemonicParsing="false" text="Register" />
-      <TextField layoutX="373.0" layoutY="29.0" promptText="username" />
-      <TextField layoutX="373.0" layoutY="106.0" promptText="phone" />
-      <TextField layoutX="373.0" layoutY="68.0" promptText="email" />
-      <TextField layoutX="373.0" layoutY="148.0" promptText="address" />
-      <PasswordField layoutX="373.0" layoutY="188.0" promptText="password" />
-      <TextField layoutX="373.0" layoutY="226.0" promptText="reffered by" />
+      <TextField fx:id="loginUsernameField" layoutX="30.0" layoutY="29.0" promptText="username" />
+      <Button fx:id="loginButton" layoutX="133.0" layoutY="106.0" mnemonicParsing="false" onAction="#loginAction" text="Login" />
+      <PasswordField fx:id="loginPasswordField" layoutX="30.0" layoutY="68.0" promptText="password" />
+      <Button fx:id="registerButton" layoutX="288.0" layoutY="274.0" mnemonicParsing="false" onAction="#registerAction" text="Register" />
+      <TextField fx:id="registerUsernameField" layoutX="199.0" layoutY="29.0" promptText="username" />
+      <TextField fx:id="registerPhoneField" layoutX="199.0" layoutY="106.0" promptText="phone" />
+      <TextField fx:id="registerEmailField" layoutX="199.0" layoutY="68.0" promptText="email" />
+      <TextField fx:id="registerAddressField" layoutX="199.0" layoutY="144.0" promptText="address" />
+      <PasswordField fx:id="registerPasswordField" layoutX="199.0" layoutY="188.0" promptText="password" />
+      <TextField fx:id="registerRefferedByField" layoutX="199.0" layoutY="233.0" promptText="reffered by" />
+      <ListView fx:id="productList" layoutX="374.0" layoutY="29.0" prefHeight="335.0" prefWidth="200.0" />
    </children>
-</Pane>
+</fx:root>

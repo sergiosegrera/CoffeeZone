@@ -81,7 +81,7 @@ CREATE TABLE menu_products (
     CONSTRAINT product_id FOREIGN KEY (product_id) REFERENCES products (product_id)
 );
 
-
+/**
 CREATE OR REPLACE TRIGGER  before_orders_insert
 BEFORE INSERT
 ON orders
@@ -100,7 +100,7 @@ BEGIN
     IF(prod_stock = 0) THEN 
         raise_application_error(-20100, 'Product out of stock. This order cannot be placed');
     END IF;
-END;
+END; *//
 
 INSERT INTO products VALUES (DEFAULT, 'Filtered Coffee', 1, 32, 1.50);
 INSERT INTO products VALUES (DEFAULT, 'Americano', 1, 30, 1.50);
@@ -116,6 +116,6 @@ INSERT INTO products VALUES (DEFAULT, 'Banana Bread', 0, 12, 1.50);
 INSERT INTO products VALUES (DEFAULT, 'Brownie', 0, 20, 2.50);
 INSERT INTO products VALUES (DEFAULT, 'Croissant', 0, 30, 2.00);
 INSERT INTO products VALUES (DEFAULT, 'Muffin', 0, 25, 2.25);
-INSERT INTO products VALUES (DEFAULT, 'Grilled Cheese Sandwich', 0, 15, 3.00);
+INSERT INTO products VALUES (DEFAULT, 'Grilled Cheese', 0, 15, 3.00);
 
 SELECT product_id, name, is_drink, stock, price FROM products;

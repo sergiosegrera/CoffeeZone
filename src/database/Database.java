@@ -396,7 +396,7 @@ public class Database {
 		if (menu.getId() == 0) {
 			// new menu
 			// insert menu + menu_products
-			PreparedStatement insertMenuStmt = con.prepareStatement("INSERT INTO menus VALUES(DEFAULT, ?, ?", Statement.RETURN_GENERATED_KEYS);
+			PreparedStatement insertMenuStmt = con.prepareStatement("INSERT INTO menus VALUES(DEFAULT, ?, ?)", Statement.RETURN_GENERATED_KEYS);
 			
 			insertMenuStmt.setString(1, menu.getName());
 			insertMenuStmt.setDouble(2, menu.getTotalPrice());
@@ -407,8 +407,13 @@ public class Database {
 			// Get generated menu_id
 			ResultSet result = insertMenuStmt.getGeneratedKeys();
 			if (result.next()) {
-				menu.setId(result.getInt(1));
+				System.out.println(result.toString());
+				System.out.println("hello");
+				String id = result.getString(1);				
+				System.out.println(id);
+				//menu.setId(Integer.valueOf(id.intValue()));
 			}
+			result.close();
 			
 			insertMenuStmt.close();
 			

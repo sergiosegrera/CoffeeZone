@@ -67,7 +67,7 @@ public class MenuProduct {
 	
 	
 	public String toString() {
-		return this.product.getName() + " " + this.product.getPrice() + " $";
+		return this.quantity + "x " + this.product.getName() + " " + this.product.getPrice() + " $";
 	}
 }
 
